@@ -1,8 +1,6 @@
 package com.alex;
 
 import com.alex.Config.AppConfig;
-import com.alex.interfaces.Messenger;
-import com.alex.interfaces.WriteToFile;
 import com.alex.rss.model.Feed;
 import com.alex.rss.model.FeedMessage;
 import com.alex.rss.read.RSSFeedParser;

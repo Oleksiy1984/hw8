@@ -1,7 +1,7 @@
 package com.alex.Config;
 
-import com.alex.impl.CacheWriter;
-import com.alex.interfaces.WriteToFile;
+
+
 import com.alex.rss.model.Feed;
 import com.alex.rss.model.FeedMessage;
 import com.alex.rss.read.RSSFeedParser;
