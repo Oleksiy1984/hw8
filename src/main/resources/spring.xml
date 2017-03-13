@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+     http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <bean id="messenger" class="com.alex.impl.MessangerImpl">
+    </bean>
+
+    <bean id="dateFormat" class="java.text.DateFormat"
+          factory-method="getDateInstance"/>
+
+    <bean id="writer" class="com.alex.impl.WriterToFileImpl" init-method="init">
+        <constructor-arg>
+            <bean class="java.util.Date"/>
+        </constructor-arg>
+        <constructor-arg ref="dateFormat"/>
+        <constructor-arg index="2" value="file.txt"/>
+    </bean>
+
+    <bean id="cacheWriter" class="com.alex.impl.CacheWriter" destroy-method="destroy">
+        <constructor-arg index="0" value="3"/>
+        <constructor-arg>
+            <bean class="java.util.Date"/>
+        </constructor-arg>
+        <constructor-arg ref="dateFormat"/>
+        <constructor-arg index="3" value="file.txt"/>
+    </bean>
+
+    <bean id="app" class="com.alex.AppXML">
+        <constructor-arg ref="cacheWriter"/>
+        <constructor-arg ref="messenger"/>
+    </bean>
+
+</beans>
