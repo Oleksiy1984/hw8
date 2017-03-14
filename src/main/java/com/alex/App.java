@@ -1,14 +1,21 @@
 package com.alex;
 
 import com.alex.Config.AppConfig;
-import com.alex.rss.model.Feed;
-import com.alex.rss.model.FeedMessage;
-import com.alex.rss.read.RSSFeedParser;
+import com.alex.impl.CacheWriter;
+import com.alex.interfaces.WriteToFile;
+
+import com.sun.syndication.feed.synd.SyndEntry;
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.SyndFeedInput;
+import com.sun.syndication.io.XmlReader;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -28,7 +35,14 @@ public class App
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
 
-
+        WriteToFile writeToFile=context.getBean(WriteToFile.class);
+      Queue<SyndEntry> list= (Queue) context.getBean("list");
+        try {
+            writeToFile.write(list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        context.close();
 //        Feed feed = context.getBean(Feed.class);
 //        for (FeedMessage message : feed.getMessages()) {
 //            System.out.println(message);
