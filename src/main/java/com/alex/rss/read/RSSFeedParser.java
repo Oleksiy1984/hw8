@@ -15,9 +15,10 @@ import com.alex.rss.model.Feed;
 import com.alex.rss.model.FeedMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class RSSFeedParser {
     static final String TITLE = "title";
     static final String DESCRIPTION = "description";
@@ -32,13 +33,10 @@ public class RSSFeedParser {
 
     final URL url;
 
-    public RSSFeedParser(String feedUrl) {
-        try {
-            this.url = new URL(feedUrl);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
+    public RSSFeedParser(URL url) {
+            this.url = url;
     }
+
     public Feed readFeed() {
         Feed feed = null;
         try {

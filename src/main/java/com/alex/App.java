@@ -5,29 +5,36 @@ import com.alex.rss.model.Feed;
 import com.alex.rss.model.FeedMessage;
 import com.alex.rss.read.RSSFeedParser;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Hello world!
  *
  */
-public class App 
+
+public class App
 {
-    public static void main( String[] args )
-    {
+
+    public static void main( String[] args ) throws InterruptedException {
+
+
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
 
-        //RSSFeedParser parser=context.getBean(RSSFeedParser.class);
-       // Feed feed=parser.readFeed();
 
+//        Feed feed = context.getBean(Feed.class);
 //        for (FeedMessage message : feed.getMessages()) {
 //            System.out.println(message);
 //
+//
 //        }
-
 //        Messenger messenger=context.getBean("messangerImpl",Messenger.class);
 //        WriteToFile writeToFile=context.getBean("cacheWriter",WriteToFile.class);
 //
@@ -40,7 +47,7 @@ public class App
 //        for (String name:context.getBeanDefinitionNames()) {
 //            System.out.println(name);
 //        }
-        context.close();
+        //context.close();
 
 
 //        RSSFeedParser parser = new RSSFeedParser(
@@ -52,5 +59,5 @@ public class App
 //            System.out.println(message);
 //
 //        }
-    }
-}
+    }}
+

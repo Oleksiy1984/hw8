@@ -2,12 +2,15 @@ package com.alex.rss.model;
 
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+
 /*
  * Stores an RSS feed
  */
-@Component
+//@Component
 public class Feed {
 
     final String title;

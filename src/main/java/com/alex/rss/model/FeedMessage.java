@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 /*
  * Represents one RSS message
  */
-@Component
+//@Component
 public class FeedMessage {
 
     String title;
@@ -53,6 +53,8 @@ public class FeedMessage {
     public void setGuid(String guid) {
         this.guid = guid;
     }
+
+
 
     @Override
     public String toString() {
