@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+
+    <bean id="dateFormat" class="java.text.DateFormat"
+          factory-method="getDateTimeInstance"/>
+
+    <bean id="url" class="java.net.URL">
+        <constructor-arg value="http://www.pravda.com.ua/rss/view_news/"/>
+    </bean>
+
+
+    <bean id="cacheWriter" class="com.alex.impl.CacheWriter" scope="prototype" init-method="init">
+        <constructor-arg index="0" value="5"/>
+        <constructor-arg index="1">
+            <bean class="java.util.Date"/>
+        </constructor-arg>
+        <constructor-arg index="2" ref="dateFormat"/>
+        <constructor-arg index="3" value="file.txt"/>
+    </bean>
+
+    <!--bean id="queue" class="java.util.ArrayDeque" scope="prototype">
+    </bean-->
+    <!--bean id="poolScheduler" class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
+        <property name="ThreadNamePrefix" value="poolScheduler" />
+        <property name="PoolSize" value="1" />
+    </bean-->
+
+    <!--bean id="fixedRateJob" factory-bean="cacheWriter" factory-method="write">
+        <property name="cacheWriter"><bean class="com.alex.impl.CacheWriter" /></property>
+        <property name="targetMethod"><value>getData</value></property>
+    </bean-->
+<!--
+    < Configure the scheduler
+    <task:scheduler id="myScheduler" />
+     Configure parameters
+    <task:scheduled-tasks scheduler="poolScheduler">
+        <task:scheduled ref="fixedRateJob" method="fixedRateJob"
+                        fixed-rate="10000" />
+    </task:scheduled-tasks-->
+
+
+
+    <!--bean id="app" class="com.alex.AppXML">
+    </bean-->
+</beans>

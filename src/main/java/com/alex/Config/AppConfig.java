@@ -21,7 +21,7 @@ import java.text.DateFormat;
 import java.util.*;
 
 @Configuration
-@ComponentScan(basePackages = "com.alex")
+@ComponentScan(basePackages = "com.alex.impl")
 @EnableScheduling
 public class AppConfig {
 
@@ -40,38 +40,24 @@ public class AppConfig {
     public WriteToFile cacheWriter() throws MalformedURLException {
         return new CacheWriter(5,
                 new Date(),dateFormat(),
-                "file.txt",url());
+                "file.txt");
     }
 
     @Bean
     @Scope("prototype")
     public Queue<SyndEntry> queue() throws IOException, FeedException {
-        HttpURLConnection httpcon = null;
+        HttpURLConnection httpcon;
             httpcon = (HttpURLConnection) url().openConnection();
         // Reading the feed
         SyndFeedInput input = new SyndFeedInput();
         SyndFeed feed = input.build(new XmlReader(httpcon));
         return new ArrayDeque<>(feed.getEntries());
     }
-    @Scheduled(fixedRate = 10000)
+
+    @Scheduled(fixedRate = 30000)
     public void fixedRateJob() throws IOException, FeedException, InterruptedException {
         cacheWriter().write(queue());
     }
-
-//    @Scheduled(fixedRate = 5000)
-//    public void fixedRateJob() throws IOException, FeedException {
-//        HttpURLConnection httpcon = (HttpURLConnection)url().openConnection();
-//        // Reading the feed
-//        SyndFeedInput input = new SyndFeedInput();
-//        SyndFeed feed = input.build(new XmlReader(httpcon));
-//        List entries = feed.getEntries();
-//        Iterator itEntries = entries.iterator();
-//        while (itEntries.hasNext()) {
-//            SyndEntry entry = (SyndEntry) itEntries.next();
-//            System.out.println(dateFormat().format(new Date())+" " + entry.getTitle()
-//                    +" " + entry.getLink());
-//        }
-//    }
 
     @Bean
     public TaskScheduler poolScheduler() {
@@ -80,8 +66,5 @@ public class AppConfig {
         scheduler.setPoolSize(1);
         return scheduler;
     }
-
-
-
 
 }
