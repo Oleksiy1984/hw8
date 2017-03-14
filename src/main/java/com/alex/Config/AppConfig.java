@@ -8,9 +8,7 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -27,28 +25,37 @@ import java.util.*;
 @EnableScheduling
 public class AppConfig {
 
-
+    @Bean
+    public DateFormat dateFormat() {
+        return DateFormat.getDateTimeInstance();
+    }
 
     @Bean
     public URL url() throws MalformedURLException {
             return new URL("http://www.pravda.com.ua/rss/view_news/");
-
     }
-    @Bean
-    public WriteToFile cacheWriter() throws MalformedURLException {
 
+    @Bean
+    @Scope("prototype")
+    public WriteToFile cacheWriter() throws MalformedURLException {
         return new CacheWriter(5,
                 new Date(),dateFormat(),
                 "file.txt",url());
     }
 
     @Bean
-    public Queue<SyndEntry> list() throws IOException, FeedException {
-        HttpURLConnection httpcon = (HttpURLConnection) url().openConnection();
+    @Scope("prototype")
+    public Queue<SyndEntry> queue() throws IOException, FeedException {
+        HttpURLConnection httpcon = null;
+            httpcon = (HttpURLConnection) url().openConnection();
         // Reading the feed
         SyndFeedInput input = new SyndFeedInput();
         SyndFeed feed = input.build(new XmlReader(httpcon));
-        return new ArrayDeque<SyndEntry>(feed.getEntries());
+        return new ArrayDeque<>(feed.getEntries());
+    }
+    @Scheduled(fixedRate = 10000)
+    public void fixedRateJob() throws IOException, FeedException, InterruptedException {
+        cacheWriter().write(queue());
     }
 
 //    @Scheduled(fixedRate = 5000)
@@ -66,18 +73,15 @@ public class AppConfig {
 //        }
 //    }
 
-//    @Bean
-//    public TaskScheduler poolScheduler() {
-//        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
-//        scheduler.setThreadNamePrefix("poolScheduler");
-//        scheduler.setPoolSize(1);
-//        return scheduler;
-//    }
-
     @Bean
-    public DateFormat dateFormat() {
-        return DateFormat.getDateTimeInstance();
+    public TaskScheduler poolScheduler() {
+        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+        scheduler.setThreadNamePrefix("poolScheduler");
+        scheduler.setPoolSize(1);
+        return scheduler;
     }
+
+
 
 
 }

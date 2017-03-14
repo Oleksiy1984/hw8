@@ -39,15 +39,8 @@ public class CacheWriter extends WriterToFileImpl {
                 System.out.println(q.size()+" "+df.format(new Date()) + " " + entry.getTitle()
                         + " " + entry.getLink());
             }
-            //cache.clear();
             Thread.sleep(1000);
         }
     }
-
-//    private void writeMsgCache() {
-//        while(!cache.isEmpty()){
-//            super.write(cache.poll());
-//
-//    }
 
 }

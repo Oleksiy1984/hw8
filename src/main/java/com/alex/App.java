@@ -29,49 +29,18 @@ import java.util.concurrent.TimeUnit;
 public class App
 {
 
-    public static void main( String[] args ) throws InterruptedException {
-
+    public static void main( String[] args ) throws InterruptedException, IOException {
 
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
 
-        WriteToFile writeToFile=context.getBean(WriteToFile.class);
-      Queue<SyndEntry> list= (Queue) context.getBean("list");
-        try {
-            writeToFile.write(list);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        context.close();
-//        Feed feed = context.getBean(Feed.class);
-//        for (FeedMessage message : feed.getMessages()) {
-//            System.out.println(message);
+//        WriteToFile writeToFile = context.getBean(WriteToFile.class);
+//        Queue<SyndEntry> queue = (Queue) context.getBean("list");
 //
-//
-//        }
-//        Messenger messenger=context.getBean("messangerImpl",Messenger.class);
-//        WriteToFile writeToFile=context.getBean("cacheWriter",WriteToFile.class);
-//
-//        int i = 0;
-//        while (i < 5){
-//            writeToFile.write(messenger.getMessage());
-//            i++;
-//        }
-//
-//        for (String name:context.getBeanDefinitionNames()) {
-//            System.out.println(name);
-//        }
+//        writeToFile.write(queue);
+
         //context.close();
 
-
-//        RSSFeedParser parser = new RSSFeedParser(
-//                "http://www.pravda.com.ua/rss/view_news/");
-//        Feed feed = parser.readFeed();
-////        List<FeedMessage> list=new ArrayList<>(feed.getMessages());
-////        System.out.println(list.get(0));
-//        for (FeedMessage message : feed.getMessages()) {
-//            System.out.println(message);
-//
-//        }
-    }}
+    }
+}
 
