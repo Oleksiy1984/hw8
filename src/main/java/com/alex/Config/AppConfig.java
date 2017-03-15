@@ -60,12 +60,4 @@ public class AppConfig {
         cacheWriter().write(queue());
     }
 
-    @Bean
-    public TaskScheduler poolScheduler() {
-        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
-        scheduler.setThreadNamePrefix("poolScheduler");
-        scheduler.setPoolSize(1);
-        return scheduler;
-    }
-
 }
