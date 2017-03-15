@@ -54,7 +54,8 @@ public class AppConfig {
         return new ArrayDeque<>(feed.getEntries());
     }
 
-    @Scheduled(fixedRate = 30000)
+    //Load RSS every 50 sec and begin print it every 10 sec
+    @Scheduled(fixedRate = 50000)
     public void fixedRateJob() throws IOException, FeedException, InterruptedException {
         cacheWriter().write(queue());
     }

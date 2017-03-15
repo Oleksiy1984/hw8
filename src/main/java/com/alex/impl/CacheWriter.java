@@ -46,10 +46,11 @@ public class CacheWriter implements WriteToFile {
             for (int i = 0; i < cacheSize; i++) {
                 SyndEntry entry = q.poll();
                 cache.add(entry);
+                //Print 5 news every 10 sec
                 System.out.println(q.size()+" "+df.format(new Date()) + " " + entry.getTitle()
                         + " " + entry.getLink());
             }
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         }
         writeToFile(cache);
     }

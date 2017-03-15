@@ -31,7 +31,8 @@ public class AppXML implements Runnable{
         writeToFile= (WriteToFile) context.getBean("cacheWriter");
 
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        service.scheduleAtFixedRate(new AppXML() , 0, 30, TimeUnit.SECONDS);
+        //Load RSS every 50 sec and begin print it every 10 sec
+        service.scheduleAtFixedRate(new AppXML() , 0, 50, TimeUnit.SECONDS);
 
     }
 
